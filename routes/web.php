@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -11,6 +12,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     // hint: get tenant name from user
     $tenant = strtoupper(Auth::user()->tenant?->name);
+    // Important : for each retrieval operation, use tenant_id
+    $users = User::where('tenant_id', Auth::user()->tenant_id)->get();
     return view('dashboard', get_defined_vars());
 })->middleware(['auth', 'verified'])->name('dashboard');
 
