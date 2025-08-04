@@ -4,8 +4,10 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -46,9 +48,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    public function tenant()
+    /**
+     * Get the tenant that the user belongs to.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return Tenant
+     */
+    public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);
+    }
+
+    public function scopeTenantUser($query,)
+    {
+        return $query->where('tenant_id', Auth::user()->tenant_id);
     }
 }

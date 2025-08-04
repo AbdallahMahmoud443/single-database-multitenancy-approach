@@ -13,7 +13,8 @@ Route::get('/dashboard', function () {
     // hint: get tenant name from user
     $tenant = strtoupper(Auth::user()->tenant?->name);
     // Important : for each retrieval operation, use tenant_id
-    $users = User::where('tenant_id', Auth::user()->tenant_id)->get();
+    // Important: for each model operation should use tenantUser() method
+    $users = User::tenantUser()->get();
     return view('dashboard', get_defined_vars());
 })->middleware(['auth', 'verified'])->name('dashboard');
 
