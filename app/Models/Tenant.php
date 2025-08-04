@@ -12,4 +12,9 @@ class Tenant extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
 }

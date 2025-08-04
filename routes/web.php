@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,8 @@ Route::get('/dashboard', function () {
     $users = User::tenantUser()->get();
     return view('dashboard', get_defined_vars());
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::resource('articles', ArticleController::class)->middleware('auth');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
