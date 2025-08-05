@@ -61,7 +61,6 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Tenant::class);
     }
-
     protected static function booted()
     {
         // hint: defined Global Scope for Tenant
