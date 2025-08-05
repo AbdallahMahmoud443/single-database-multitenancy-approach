@@ -39,7 +39,6 @@ class ArticleController extends Controller
             'title' => $request->input('title'),
             'content' => $request->input('content'),
             'user_id' => Auth::user()->id,
-            'tenant_id' => Auth::user()->tenant_id,
         ];
         $article = Article::create($article_data);
         if ($article)

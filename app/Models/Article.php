@@ -35,4 +35,12 @@ class Article extends Model
     {
         return $query->where('tenant_id', Auth::user()->tenant_id);
     }
+
+    protected static function booted()
+    {
+        // hint: this event should be used to set the tenant_id for every model,during creation Process
+        static::creating(function (Article $article) {
+            $article->tenant_id = Auth::user()->tenant_id;
+        }); // Will fire before a new model is saved.
+    }
 }
