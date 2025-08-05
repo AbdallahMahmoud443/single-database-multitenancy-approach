@@ -14,7 +14,7 @@ class ArticleController extends Controller
     public function index()
     {
         //
-        $articles = Article::tenantUser()->get();
+        $articles = Article::all();
         return view('article.index', get_defined_vars());
     }
     /**

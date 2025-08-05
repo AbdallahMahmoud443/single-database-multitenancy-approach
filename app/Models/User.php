@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Scopes\TenantScope;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -64,5 +67,13 @@ class User extends Authenticatable
     public function scopeTenantUser($query)
     {
         return $query->where('tenant_id', Auth::user()->tenant_id);
+    }
+
+    protected static function booted()
+    {
+        // hint: defined Global Scope for Tenant
+        // important: should check first if user is logged in,then fetch All User based on where clause in TenantScope class (Trick),
+        // important: should TenantScope doesn't work when fetch Auth User , so we need to check if user is logged in (Trick)
+        if (Auth::check())  static::addGlobalScope(new TenantScope);
     }
 }
