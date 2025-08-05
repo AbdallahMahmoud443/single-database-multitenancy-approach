@@ -61,13 +61,6 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Tenant::class);
     }
-    /**
-     * Get the scope for tenant users.
-     */
-    public function scopeTenantUser($query)
-    {
-        return $query->where('tenant_id', Auth::user()->tenant_id);
-    }
 
     protected static function booted()
     {
